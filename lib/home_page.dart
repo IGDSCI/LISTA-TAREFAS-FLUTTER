@@ -35,50 +35,58 @@ class _HomePageStfState extends State<HomePageStf> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey,
-          content: SizedBox(
-            height: 120,
-            child: Column(children: [
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Nome da tarefa',
-                ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 250),
+            child: AlertDialog(
+              shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              backgroundColor: Colors.grey,
+              content: SizedBox(
+                height: 110,
+                child: Column(children: [
+                  TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Nome da tarefa',
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    lista.add([_controller.text, false]);
-                    _controller.clear();
-                  });
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Criar tarefa',
-                  style: TextStyle(color: Colors.black),
-                ),
-              )
-            ]),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          lista.add([_controller.text, false]);
+                          _controller.clear();
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Criar tarefa',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ),
+                  )
+                ]),
+              ),
+            ),
           ),
         );
       },
     );
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: CriarTarefa),
+        floatingActionButton: FloatingActionButton(onPressed: CriarTarefa, child: Icon(Icons.add, color: Colors.white), backgroundColor: Colors.black),
         backgroundColor: const Color.fromARGB(255, 75, 74, 74),
         appBar: AppBar(
           centerTitle: true,
@@ -91,7 +99,8 @@ class _HomePageStfState extends State<HomePageStf> {
         body: ListView.builder(
           itemCount: lista.length,
           itemBuilder: (context, index) {
-            return criarLinha(Excluir, index,lista[index][0], lista[index][1], () {
+            return criarLinha(Excluir, index, lista[index][0], lista[index][1],
+                () {
               onChanged(index);
             });
           },
@@ -107,54 +116,66 @@ class _HomePageStfState extends State<HomePageStf> {
   }
 }
 
-
-
-
-
-Widget criarLinha(Function excluir, int index, String nome, bool status, VoidCallback onchanged) {
+Widget criarLinha(Function excluir, int index, String nome, bool status,
+    VoidCallback onchanged) {
   return Column(children: [
     Padding(
       padding: const EdgeInsets.all(25.0),
       child: Container(
         height: 75,
-        width: 400,
+        width: 500,
         decoration: BoxDecoration(
           border: Border.all(width: 1),
           borderRadius: BorderRadius.circular(12),
           color: Colors.grey,
         ),
-        child: Row(
+        child: ListView(
+          scrollDirection: Axis.horizontal,
           children: [
-            Checkbox(
-              value: status,
-              onChanged: (value) => onchanged(),
-              activeColor: Colors.black,
+            Row(
+              children: [
+                SizedBox(
+                  width: 340,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                        value: status,
+                        onChanged: (value) => onchanged(),
+                        activeColor: Colors.black,
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Text(
+                          nome,
+                          style: TextStyle(
+                            color: Colors.white,
+                            decoration: status
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Text(
-              nome,
-              style: TextStyle(
-                color: Colors.white,
-                decoration: status ? TextDecoration.lineThrough : TextDecoration.none,
-              ),
-            ),
-            Expanded( 
-              child: SizedBox(),
-            ),
-
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: Visibility(
                 visible: status ? true : false,
                 child: ElevatedButton(
-                  onPressed: () => excluir(index), 
+                  onPressed: () => excluir(index),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: status ? Colors.red : Colors.red,
-                    shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                   child: Text(
                     'Excluir',
                     style: TextStyle(color: Colors.white),
-                    ),
+                  ),
                 ),
               ),
             )
@@ -164,6 +185,3 @@ Widget criarLinha(Function excluir, int index, String nome, bool status, VoidCal
     )
   ]);
 }
-
-
-

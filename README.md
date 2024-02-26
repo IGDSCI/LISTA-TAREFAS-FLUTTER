@@ -1,16 +1,10 @@
-# lista_tarefas
+# Lista de Tarefas
 
-A new Flutter project.
+## Projeto desenvolvido para fixar a utilização de funções
 
-## Getting Started
+## Imagens do projeto:
 
-This project is a starting point for a Flutter application.
+![image](https://github.com/IGDSCI/LISTA-TAREFAS-FLUTTER/assets/114839208/bef91adb-f436-4c55-801f-92ad6a99d5ab)
+![image](https://github.com/IGDSCI/LISTA-TAREFAS-FLUTTER/assets/114839208/4a2393ff-5e81-48ff-aaf5-ee89db529859)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

@@ -129,58 +129,50 @@ Widget criarLinha(Function excluir, int index, String nome, bool status,
           borderRadius: BorderRadius.circular(12),
           color: Colors.grey,
         ),
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 340,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        value: status,
-                        onChanged: (value) => onchanged(),
-                        activeColor: Colors.black,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Text(
-                          nome,
-                          style: TextStyle(
-                            color: Colors.white,
-                            decoration: status
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                          ),
+        child: 
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    value: status,
+                    onChanged: (value) => onchanged(),
+                    activeColor: Colors.black,
+                  ),
+                  SizedBox(
+                    width: 340,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        nome,
+                        style: TextStyle(
+                          color: Colors.white,
+                          decoration: status ? TextDecoration.lineThrough : TextDecoration.none,
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+              
+                  Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Visibility(
+                  visible: status ? true : false,
+                  child: ElevatedButton(
+                    onPressed: () => excluir(index),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: status ? Colors.red : Colors.red,
+                      shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    child: Text(
+                      'Excluir',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Visibility(
-                visible: status ? true : false,
-                child: ElevatedButton(
-                  onPressed: () => excluir(index),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: status ? Colors.red : Colors.red,
-                    shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: Text(
-                    'Excluir',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+              )
+                ],
               ),
-            )
-          ],
-        ),
+            ),
       ),
     )
   ]);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class HomePageStl extends StatelessWidget {
   const HomePageStl({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,15 +12,17 @@ class HomePageStl extends StatelessWidget {
   }
 }
 
+
 class HomePageStf extends StatefulWidget {
   const HomePageStf({Key? key}) : super(key: key);
-
   @override
   State<HomePageStf> createState() => _HomePageStfState();
 }
 
+
 class _HomePageStfState extends State<HomePageStf> {
   List lista = [];
+  final _controller = TextEditingController();
 
   void Excluir(int index) {
     setState(() {
@@ -29,7 +30,11 @@ class _HomePageStfState extends State<HomePageStf> {
     });
   }
 
-  final _controller = TextEditingController();
+  void onChanged(int index) {
+    setState(() {
+      lista[index][1] = !lista[index][1];
+    });
+  }
 
   void CriarTarefa() {
     showDialog(
@@ -39,7 +44,8 @@ class _HomePageStfState extends State<HomePageStf> {
           child: Padding(
             padding: const EdgeInsets.only(top: 250),
             child: AlertDialog(
-              shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
               backgroundColor: Colors.grey,
               content: SizedBox(
                 height: 110,
@@ -51,6 +57,7 @@ class _HomePageStfState extends State<HomePageStf> {
                       hintText: 'Nome da tarefa',
                     ),
                   ),
+
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
@@ -86,7 +93,14 @@ class _HomePageStfState extends State<HomePageStf> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: CriarTarefa, child: Icon(Icons.add, color: Colors.white), backgroundColor: Colors.black),
+        floatingActionButton: FloatingActionButton(
+            onPressed: CriarTarefa,
+            backgroundColor: Colors.black,
+            child: Icon(
+              Icons.add, 
+              color: Colors.white
+            )
+          ),
         backgroundColor: const Color.fromARGB(255, 75, 74, 74),
         appBar: AppBar(
           centerTitle: true,
@@ -99,8 +113,7 @@ class _HomePageStfState extends State<HomePageStf> {
         body: ListView.builder(
           itemCount: lista.length,
           itemBuilder: (context, index) {
-            return criarLinha(Excluir, index, lista[index][0], lista[index][1],
-                () {
+            return criarLinha(Excluir, index, lista[index][0], lista[index][1], () {
               onChanged(index);
             });
           },
@@ -108,16 +121,9 @@ class _HomePageStfState extends State<HomePageStf> {
       ),
     );
   }
-
-  void onChanged(int index) {
-    setState(() {
-      lista[index][1] = !lista[index][1];
-    });
-  }
 }
 
-Widget criarLinha(Function excluir, int index, String nome, bool status,
-    VoidCallback onchanged) {
+Widget criarLinha(Function excluir, int index, String nome, bool status, VoidCallback onchanged) {
   return Column(children: [
     Padding(
       padding: const EdgeInsets.all(25.0),
@@ -129,38 +135,38 @@ Widget criarLinha(Function excluir, int index, String nome, bool status,
           borderRadius: BorderRadius.circular(12),
           color: Colors.grey,
         ),
-        child: 
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Checkbox(
-                    value: status,
-                    onChanged: (value) => onchanged(),
-                    activeColor: Colors.black,
-                  ),
-                  SizedBox(
-                    width: 340,
-                    child: SingleChildScrollView(
-                      child: Text(
-                        nome,
-                        style: TextStyle(
-                          color: Colors.white,
-                          decoration: status ? TextDecoration.lineThrough : TextDecoration.none,
-                        ),
-                      ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Checkbox(
+                value: status,
+                onChanged: (value) => onchanged(),
+                activeColor: Colors.black,
+              ),
+
+              SizedBox(
+                width: 340,
+                child: SingleChildScrollView(
+                  child: Text(
+                    nome,
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: status ? TextDecoration.lineThrough : TextDecoration.none,
                     ),
                   ),
-              
-                  Padding(
+                ),
+              ),
+
+              Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Visibility(
                   visible: status ? true : false,
                   child: ElevatedButton(
                     onPressed: () => excluir(index),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: status ? Colors.red : Colors.red,
+                      backgroundColor: Colors.red,
                       shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     child: Text(
@@ -170,9 +176,9 @@ Widget criarLinha(Function excluir, int index, String nome, bool status,
                   ),
                 ),
               )
-                ],
-              ),
-            ),
+            ],
+          ),
+        ),
       ),
     )
   ]);

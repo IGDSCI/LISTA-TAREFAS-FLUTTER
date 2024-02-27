@@ -48,39 +48,41 @@ class _HomePageStfState extends State<HomePageStf> {
                   borderRadius: BorderRadius.circular(12)),
               backgroundColor: Colors.grey,
               content: SizedBox(
-                height: 110,
-                child: Column(children: [
-                  TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Nome da tarefa',
+                height: 135,
+                child: SingleChildScrollView(
+                  child: Column(children: [
+                    TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Nome da tarefa',
+                      ),
                     ),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                  
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            lista.add([_controller.text, false]);
+                            _controller.clear();
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          'Criar tarefa',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          lista.add([_controller.text, false]);
-                          _controller.clear();
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Criar tarefa',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                    ),
-                  )
-                ]),
+                    )
+                  ]),
+                ),
               ),
             ),
           ),
